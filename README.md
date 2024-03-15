@@ -307,3 +307,349 @@ Select an Item to remove:<select ng-model="selectitem" ng-options="item for item
         </div>
     </body>
     </html>
+
+
+
+
+
+    /////////////////////////program7
+
+    <!DOCTYPE html>
+<html>
+    <head>
+        <title>LAB7 PROGRAM</title>
+  <script type="text/javascript" src="https:\\ajax.googleapis.com\ajax\libs\angularjs\1.8.2\angular.min.js">
+        </script>
+        <script> 
+        var app=angular.module("myApp",[]);             
+        app.controller("myCntrl",function($scope)
+        {
+               $scope.users=[
+{"name":"Prof. N. Thanuja","email":"thanu.anu21@gmail.com","editing":false},
+                        {"name":"Prof. Anu","email":"anu22@gmail.com","editing":false},
+                        {"name":"Prof. Janutha","email":"janutha@gmail.com","editing":false}]
+                            
+                $scope.createuser=function()
+                {
+                    if($scope.newusername && $scope.newuseremail)
+                    {
+                        var u={
+                            'name':$scope.newusername,
+                            'email':$scope.newuseremail,
+                            'editing':false
+                            }
+                        $scope.users.push(u)
+                        $scope.newusername=' '
+                        $scope.newuseremail=' '
+                    }
+                    else
+                        alert("Please provide the User Name and Email id")
+                }
+
+                $scope.readuser=function(user)
+                {
+                    user.editing=true
+                }
+
+                $scope.updateuser=function(user)
+                {
+                    user.editing=false 
+                }
+
+                $scope.deleteuser=function(user)
+                {
+                    var confirm=prompt("Are you sure you want to delete")
+                    if(confirm=="Yes")
+                    {
+                        var index=$scope.users.indexOf(user)
+                        $scope.users.splice(index,1)
+                    }
+                }
+            });        
+        </script>
+    </head>
+    <body ng-app="myApp"> 
+        <h1>USER MANAGEMENT APPLICATION</h1>
+        <div ng-controller="myCntrl">
+           Enter the User Name:<input type="text" ng-model="newusername" />
+           Enter the User Email:<input type="email" ng-model="newuseremail" />
+           <button ng-click="createuser()">CREATE</button><br />
+            <ul>
+                <li ng-repeat="user in users">
+<span ng-show="!user.editing">{{user.name}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="text" ng-show="user.editing" ng-model="user.name" />
+<span ng-show="!user.editing">{{user.email}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="text" ng-show="user.editing" ng-model="user.email" />
+                    <button ng-click="readuser(user)">READ</button>
+                    <button ng-click="updateuser(user)">UPDATE</button>
+                    <button ng-click="deleteuser(user)">DELETE</button>
+                    <br />
+                </li>
+            </ul>
+        </div>
+    </body>
+    </html>
+
+    
+    
+    /////////////////////////program8
+
+    <!DOCTYPE html>
+<html>
+    <head>
+        <title>LAB8 PROGRAM</title>
+        <script type="text/javascript" src="https:\\ajax.googleapis.com\ajax\libs\angularjs\1.8.2\angular.min.js">
+        </script>
+        <script> 
+        var app=angular.module("myApp",[]);             
+        app.controller("myCntrl",function($scope)
+        {
+               $scope.username=''
+               $scope.password=''  
+               $scope.noattempts=0
+               $scope.login=function()
+               {
+                //console.log("Inside login function")
+                if($scope.username=="thanuja" && $scope.password=="12345678")
+                {
+                    alert("Login Successful")
+                }
+                else{
+                    $scope.noattempts++
+                    if($scope.noattempts<=3)
+                    {
+                        alert("Incorrect username/password! Attempt No. "+$scope.noattempts)
+                    }
+                    else
+                    {
+                        document.getElementById("loginbutton").disabled=true
+                    }
+                }
+                }
+            });        
+        </script>
+        <style>
+            .error-message{color:red; font-size:20px}
+        </style>
+    </head>
+    <body ng-app="myApp"> 
+        <h1>ANGULARJS LOGIN FORM</h1>
+        <form name="loginform" ng-submit="submitform()">
+            <div ng-controller="myCntrl">
+                Enter User Name:<input type="text" name="username" ng-model="username" ng-minlength="5" ng-maxlength="8" required>
+                <span class="error-message" ng-show="loginform.username.$error.required && loginform.username.$dirty">User Name is Required</span>
+                <span class="error-message" ng-show="loginform.username.$error.minlength">Minimum Length Must be 5</span>
+                <span class="error-message" ng-show="loginform.username.$error.maxlength">Maximum Username Length is Limited to 8</span><br/><br/>
+                Enter Password:<input type="password" name="password" ng-model="password" ng-minlength="5" ng-maxlength="8" required>
+                <span class="error-message" ng-show="loginform.password.$error.required && loginform.password.$dirty">Password is Required</span>
+                <span class="error-message" ng-show="loginform.password.$error.minlength"> Minimum Password Length Must be 5</span>
+                <span class="error-message" ng-show="loginform.password.$error.maxlength"> Maximum Password Length is Limited to 8</span><br/><br/>
+                <button type="submit" ng-disabled="loginform.$invalid" ng-click="login()" id="loginbutton">Login</button> 
+            </div>
+        </form>
+    </body>
+</html>
+
+
+    
+    /////////////////////////program9
+
+    <!DOCTYPE html>
+<html>
+    <head>
+        <title>LAB9 PROGRAM</title>
+  <script type="text/javascript" src="https:\\ajax.googleapis.com\ajax\libs\angularjs\1.8.2\angular.min.js">
+        </script>
+        <script> 
+        var app=angular.module("myApp",[]);
+        app.controller("myCntrl",function($scope)
+        {
+            $scope.emplist=[{'name':'Thanu','salary':50000},
+                            {'name':'Arya','salary':40000},
+                            {'name':'Sri','salary':80000},
+                            {'name':'Chandu','salary':80000},
+                            {'name':'Kumar','salary':70000},
+                            {'name':'Anu','salary':60000},
+                            {'name':'Pramod','salary':30000},
+                            {'name':'Madhu','salary':90000},
+                            {'name':'Mohan','salary':20000},
+                            {'name':'Shiva','salary':100000}]
+
+            $scope.clearfilters=function()
+            {
+                $scope.searchname=""
+                $scope.searchsalary=""
+            }
+            });      
+        </script>
+    </head>
+    <body ng-app="myApp"> 
+        <h1>EMPLOYEE SEARCH APPLICATION</h1>
+        <div ng-controller="myCntrl">
+            Search Employee by Name:<input type="text" ng-model="searchname">
+            Search Employee by Salary:<input type="number" ng-model="searchsalary">
+            <button ng-click="clearfilters()">CLEAR FILTERS</button>
+            <h3>List of Employees</h3>
+            <table border="1">
+                <tr>
+                    <th>SL.NO.</th>
+                    <th>EMPLOYEE NAME</th>
+                    <th>SALARY</th>
+                </tr>
+                <tr ng-repeat="emp in emplist | filter:{name:searchname,salary:searchsalary}" >
+                    <td>{{$index+1}}</td>
+                    <td>{{emp.name}}</td>
+                    <td>{{emp.salary}}</td>
+                </tr>
+            </table>
+        </div>        
+    </body>
+</html>
+
+
+    
+    /////////////////////////program10
+
+    <!DOCTYPE html>
+<html>
+    <head>
+        <title>LAB10 PROGRAM</title>
+        <script type="text/javascript" src="https:\\ajax.googleapis.com\ajax\libs\angularjs\1.8.2\angular.min.js">
+        </script>
+        <script> 
+        var app=angular.module("myApp",[]); 
+        app.controller("myCntrl",function($scope)
+        {
+            $scope.itemlist=['Pen','Pencil','Book','Eraser']
+            $scope.add=function()
+            {
+                if($scope.additem)
+                {
+                    if($scope.itemlist.indexOf($scope.additem)==-1)
+                    {
+                        $scope.itemlist.push($scope.additem)
+                    }
+                    else
+                        alert("This item is already exists in the collection")
+                }
+                else
+                    alert("Please enter an item to add")
+            }
+
+            $scope.remove=function(item)
+            {
+                confirm=prompt("Are you sure you want to delete "+item)
+                if(confirm=='Yes')
+                {
+                    var index=$scope.itemlist.indexOf(item)
+                    $scope.itemlist.splice(index,1)
+                }
+            }
+            });      
+        </script>
+    </head>
+    <body ng-app="myApp"> 
+        <h1>ITEM MANAGEMENT APPLICATION</h1>
+        <div ng-controller="myCntrl">
+            Enter an Item to add:<input type="text" ng-model="additem" />
+            <button ng-click="add()">ADD</button>
+            <h3>List of Items</h3>
+            <table border="1">
+                <tr>
+                    <th>SL.NO.</th>
+                    <th>ITEM</th>
+                    <th>Remove</th>
+                </tr>
+                <tr ng-repeat="item in itemlist">
+                    <td>{{$index+1}}</td>
+                    <td>{{item}}</td>
+                    <td><button ng-click="remove(item)">REMOVE</button></td>
+                </tr>
+            </table>
+               <br/><br/>         
+            Total Number of Items=<b>{{itemlist.length}}</b>
+        </div>        
+    </body>
+</html>
+
+
+    
+    /////////////////////////program11
+
+    <!DOCTYPE html>
+<html>
+    <head>
+        <title>LAB11 PROGRAM</title>
+        <script type="text/javascript" src="https:\\ajax.googleapis.com\ajax\libs\angularjs\1.8.2\angular.min.js">
+        </script>
+        <script> 
+        var app=angular.module("myApp",[]); 
+        app.controller("myCntrl",function($scope)
+        {
+            $scope.stud=['thanuja','chandu','mohana','arun','shiva']
+        });      
+        </script>
+    </head>
+    <body ng-app="myApp"> 
+        <h1>STUDENT DEATILS IN UPPERCASE</h1>
+        <div ng-controller="myCntrl">
+            <table border="5">
+                <tr>
+                    <th>SL.NO.</th>
+                    <th>NAME</th>
+                </tr>
+                <tr ng-repeat="std in stud">
+                    <td>{{$index+1}}</td>
+                    <td>{{std | uppercase}}</td>
+                </tr>
+            </table>
+        </div>        
+    </body>
+</html>
+
+
+    
+    /////////////////////////program12
+
+    <!DOCTYPE html>
+<html>
+    <head>
+        <title>LAB12 PROGRAM</title>
+        <script type="text/javascript" src="https:\\ajax.googleapis.com\ajax\libs\angularjs\1.8.2\angular.min.js">
+        </script>
+        <script> 
+        var app=angular.module("myApp",[]); 
+        app.controller("myCntrl",function($scope)
+        {
+            $scope.curdate=new Date();
+        });
+        </script>
+    </head>
+    <body ng-app="myApp"> 
+        <h1>DATE IN DIFFERENT FORMATS</h1>
+        <div ng-controller="myCntrl">
+            Current Date and Time: {{curdate}}<br /><br />
+            
+            Short Date:{{curdate|date:'short'}}<br /><br />
+            Medium Date:{{curdate|date:'medium'}}<br /><br />
+            Long Date:{{curdate|date:'longDate'}}<br /><br />
+            
+            Short:{{curdate | date:'short'}}<br /><br />
+            Medium:{{curdate | date:'medium'}}<br /><br />
+            Full Date:{{curdate | date:'fullDate'}}<br /><br />
+
+            Short Time:{{curdate | date:'shortTime'}}<br /><br />
+            Medium Time:{{curdate | date:'mediumTime'}}<br /><br />
+            
+            Today: {{curdate|date:'dd.MMMM.yyyy'}}<br /><br />
+            Today-1: {{curdate|date:'dd.MMM.yy'}}<br /><br />
+            Today-2: {{curdate|date:'dd.MM.y'}}<br /><br />
+            Today-3: {{curdate|date:'d.M.y'}}<br /><br />
+            Today-4: {{curdate|date:'d.MM.y-hh.mm.ss'}}<br /><br />
+            Today-5: {{curdate|date:'dd.MM.y-h.m.s'}}
+        </div>        
+    </body>
+</html>
+
+
+    
